@@ -29,13 +29,16 @@ jarvis_tools = [
         'type': 'function',
         'function': {
             'name': 'web_search',
-            'description': 'Search the web for real-time information, news, or weather.',
+            'description': '''Search the web for real-time information.''',
             'parameters': {
                 'type': 'object',
                 'properties': {
                     'query': {
                         'type': 'string',
-                        'description': 'The search query to look up on the internet.',
+                        'description': '''
+                        The search query to look up on the internet. 
+                        If you cannot find an appropriate search query, do not use the tool and answer based on what you know.
+                        ''',
                     },
                 },
                 'required': ['query'],
@@ -44,13 +47,16 @@ jarvis_tools = [
     },
 ]
 
-
 def start_Jarvis_en():
     # Context management with English instructions
     messages = [
         {
             'role': 'system', 
-            'content': "You are Jarvis. Sophisticated, British, and polite. Always address the user as 'Sir'. IMPORTANT: Keep your responses extremely concise and to the point. Do not be wordy."
+            'content': """
+            --IMPORTANT--
+            You are Jarvis. Sophisticated, British, and polite. 
+            Always address the user as 'Sir'. 
+            """
         }
     ]
 
@@ -76,7 +82,8 @@ def start_Jarvis_en():
             response = ollama.chat(
                 model='llama3.2:latest', # Llama3 performs excellently in English
                 messages=messages,
-                tools=jarvis_tools
+                tools=jarvis_tools,
+                
             )
 
             # [단계 2] 모델이 도구 사용을 요청했는지 확인
